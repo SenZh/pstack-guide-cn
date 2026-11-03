@@ -4,7 +4,9 @@
 
 ---
 
-## 先设计再写代码（04-design.md）
+## 先设计再写代码（04-design.md，Design before you write code）
+
+> 源文件 8.7 KB。核心内容：设计先行——`/architect` 在实现前定类型与边界（可要求 checkpoint 先看设计），`/arena` 并行多方案加跨家族裁判、选基底并嫁接最优部分，`/swarm` 覆盖切片与竞速、`/interrogate` 对抗验证每条 finding；原型回答开放问题、共享代码先写教程、设计定型后再出多 PR 计划；结尾给出"一个任务配得上多少设计"的阶梯。
 
 对一份困难的设计只尝试一次，会把模型最先想到的那个形状锁定下来。`/architect` 在实现之前把类型与边界定下来。`/arena` 对同一份任务简报（brief，任务简报）并行跑多次尝试，合并其中最好的部分。`/interrogate` 让其他模型设法击破结果。当你要的是覆盖面而不是设计综合时，`/swarm` 把切片扇出（fan-out，一对多并发派发）或开竞速，再把各自的结果汇总起来。
 
@@ -50,7 +52,7 @@ flowchart LR
     H --> I[验证]
 ```
 
-面板来自你的 [`/setup-pstack`](../skills/setup-pstack.md) 配置，而且可以按任务调整。决策代价高时多要几个候选，不值当时少要几个：
+面板（panel）来自你的 [`/setup-pstack`](../skills/setup-pstack.md) 配置，而且可以按任务调整。决策代价高时多要几个候选，不值当时少要几个：
 
 ```text
 /arena this, 5 candidates. the cache key format is expensive to change later.
@@ -129,9 +131,9 @@ pstack 故意不提供规划技能。当你确实想要一份成文计划时，�
 - 一个小而完整、但你心里没底的变更，只配 `/interrogate`。
 - 一个跨越函数边界或移动所有权的变更，配得上 `/architect`，它自带 `/arena`。
 - 一个独立的决策——命名、格式、算法之类，独立尝试有帮助——直接上 `/arena`。
-- 一个覆盖矩阵、一组并行检查、或声明了泳道的竞速，是 `/swarm`。
+- 一个覆盖矩阵、一组并行检查、或声明了泳道（lane）的竞速，是 `/swarm`。
 - 一个跑点什么就能回答的开放问题——一个布局、一段时序、一条技术路线——配原型，不配争论。
-- 一个翻转代价高的争议设计，得到 `/architect`，交付之前再过一道 `/interrogate`。
+- 一个翻转代价高的争议设计（即"单向门"one-way door），先得到 `/architect`，交付之前再过一道 `/interrogate`。
 - 跨越多个 PR 的工作，得到一份计划，写在设计定型之后。
 
 `/poteto-mode` 本来就在套用这个阶梯。跨边界的工作会自行触发 `/architect`，所以你直接点名这些技能，主要是想要比默认更多或更少的审查强度时。
@@ -140,13 +142,15 @@ pstack 故意不提供规划技能。当你确实想要一份成文计划时，�
 
 ---
 
-## 构建与清理变更（05-build-and-clean.md）
+## 构建与清理变更（05-build-and-clean.md，Build the change and clean the diff）
+
+> 源文件 5.7 KB。核心内容：四类构建 prompt 的模板（bug 说症状要 repro、feature 说行为与不许变的、refactor 先钉行为、perf 说测量不说印象），配 Hillclimb 持续爬坡、Runtime/Trace forensics 只要诊断；`/tdd` 失败测试先行、typescript-best-practices 按名加载；`/deslop` 清代码、`/unslop` 清文字、`/no-comments` 派 Comment Sicko 剥注释，以及"清理不是可选抛光"的坑。
 
 构建类剧本共享同一条纪律。说你观察到了什么，让剧本去向证据索要。本页先讲每个常见构建任务的 prompt 该放什么，再讲让 diff 保持可评审的清理习惯。
 
 ### 把你知道的喂给每个构建剧本
 
-缺陷（bug）prompt 陈述症状，并要求先复现（repro）：
+缺陷（bug）prompt 陈述症状，并要求先复现（repro，复现）：
 
 ```text
 /poteto-mode this command emits two records after a retry. repro first, then fix and verify.
@@ -174,7 +178,7 @@ pstack 故意不提供规划技能。当你确实想要一份成文计划时，�
 
 要对一个数字做持续改进，有 [Hillclimb 剧本](./playbooks-01-task.md)（`playbooks/hillclimb.md`，爬坡）。给它指标、目标和一个尝试次数下限，它以一套冻结的测量装置（harness，宿主环境）一次循环一条假设。它保留有效的胜利，回退其余一切。
 
-两个 perf 剧本都会对各自的数字跑 [`/benchmark-checklist`](../skills/benchmark-checklist.md)。Perf issue 审查基线及其后的每一个数字；Hillclimb 在冻结装置之前先审查装置。什么时候需要你自己输入这条命令，见本篇"验证与交付"一节中"用 `/benchmark-checklist` 审查一个测量出的数字"。
+两个 perf 剧本都会对各自的数字跑 [`/benchmark-checklist`](../skills/benchmark-checklist.md)。Perf issue 审查基线及其后的每一个数字；Hillclimb 在冻结装置之前先审查装置。什么时候需要你自己输入这条命令，见下篇"验证与交付"（06-verify-and-ship.md）中"用 `/benchmark-checklist` 审查一个测量出的数字"一节。
 
 有时候你要的是原因，先于任何修复。对一个活体症状——泄漏、空闲 CPU 空转、视觉毛刺——[Runtime forensics 剧本](./playbooks-01-task.md)（`playbooks/runtime-forensics.md`，运行时取证）给运行中的进程装仪表。对一份你已经捕获的 profile，[Trace forensics 剧本](./playbooks-01-task.md)（`playbooks/trace-forensics.md`，轨迹取证）读制品（artifact，制品）、把热帧映射回源码。两者都返回诊断，不返回修复：
 
@@ -198,7 +202,7 @@ typescript-best-practices 技能把类型系统原则变成具体规则：可辨
 
 ### 提交之前先清理
 
-[Opening a PR 剧本](./playbooks-01-task.md)（`playbooks/opening-a-pr.md`）在每次 commit 之前对 diff 跑 `/deslop`，并对 PR 描述与 commit 正文应用 [`/unslop`](../skills/unslop.md)。`/deslop` 随 `cursor-team-kit` 插件发布，不在 pstack 里。你没有它时，就用平实的话要同样的结果：删掉叙述性注释、没有依据的守卫（guard）、死掉的兼容路径、和不相关的改动。
+[Opening a PR 剧本](./playbooks-01-task.md)（`playbooks/opening-a-pr.md`）在每次 commit 之前对 diff 跑 `/deslop`，并对 PR 描述与 commit 正文应用 `/unslop` 技能。`/deslop` 随 `cursor-team-kit` 插件发布，不在 pstack 里。你没有它时，就用平实的话要同样的结果：删掉叙述性注释、没有依据的守卫（guard）、死掉的兼容路径、和不相关的改动。
 
 对文字（prose），`/unslop` 收一个目标和你的任何附加规则：
 
@@ -216,7 +220,7 @@ typescript-best-practices 技能把类型系统原则变成具体规则：可辨
 /no-comments the diff
 ```
 
-no-comments 技能（`/no-comments`）派出 Comment Sicko（保留不译），一个只读评审者，持有一份很短的保留清单：许可证头、公共 API 上的文档注释、解释代码解释不了之事的链接、由你无法重塑的外部依赖所强制的行为。其余全走。为你自己代码里的意外做解释，换不来这种宽免：那条注释会以重构标记的形式回来，而 `/no-comments` 在根因处修掉它接受的标记。当一条注释主张一个约束——"do not remove"——该技能会提议把这个主张编码成一个类型、一个测试或一条 lint。无论走哪条路，注释都会被移出来。
+[`/no-comments`](../skills/no-comments.md) 派出 Comment Sicko（保留不译），一个只读评审者，持有一份很短的保留清单：许可证头、公共 API 上的文档注释、解释代码解释不了之事的链接、由你无法重塑的外部依赖所强制的行为。其余全走。为你自己代码里的意外做解释，换不来这种宽免：那条注释会以重构标记的形式回来，而 `/no-comments` 在根因处修掉它接受的标记。当一条注释主张一个约束——"do not remove"——该技能会提议把这个主张编码成一个类型、一个测试或一条 lint。无论走哪条路，注释都会被移出来。
 
 分工值得记清楚：`/deslop` 把 slop（AI 生成的低质冗余内容）从代码里清出去，`/unslop` 把它从文字里清出去，`/no-comments` 把注释交给一个没写过它们的评审者。
 
@@ -226,11 +230,13 @@ no-comments 技能（`/no-comments`）派出 Comment Sicko（保留不译），�
 
 ---
 
-## 验证与交付（06-verify-and-ship.md）
+## 验证与交付（06-verify-and-ship.md，Verify the result and open a PR）
+
+> 源文件 13.2 KB，本篇最长。核心内容分两大块：其一，验证——第一条 prompt 就写明完成判据、`/benchmark-checklist` 七问审数字、用 `/create-verification-skill` 生成项目验证技能（Launch/Doctor/Drive/Evidence/Cleanup 五节 + 功能地图）并用 `/maintain-verification-skill` 每日保持诚实；其二，形式化验证——用 `/create-formal-verification-skill` 挑最强性质、选模型检验器或代码验证器、展示反例、交接界限与漂移维护（TLA+ 为默认），`/statechart` 把反例画成产品与设计看得懂的状态图；最后开 PR、Babysit 推到 merge-ready、Shipping 逐 PR 验证后落地整条堆叠。
 
 "能编译"不是证据。prove-it-works 原则（principle-prove-it-works，证明它有效）要求 agent 在报告成功之前检查真实的制品（artifact，制品），而你的工作是让"真实的制品"变得可检查。本页覆盖：陈述完成判据、审查一个测量出的数字、为你的应用生成验证技能、对测试很少够得着的性质做形式化验证（formal verification）、开 PR，以及把它一路推进到合并。
 
-验证是多数 agent 工作里最慢的一步，因为它通常是那个要等人类的一步。让 agent 自己能做验证，你就不再是瓶颈。跳过它，跑再多 agent 也只是堆出更多没人检查、等你评审的活。
+验证是多数 agent 工作里最慢的一步，因为它通常是那个要等人类（the human）的一步。让 agent 自己能做验证，你就不再是瓶颈。跳过它，跑再多 agent 也只是堆出更多没人检查、等你评审的活。
 
 ![一架原型飞机飞一条真实的测试航线，她手持秒表计时，机器人负责拍摄并逐项核对检查清单；终端读出 verify: pass, evidence: captured。](./images/verification.jpg)
 
@@ -337,9 +343,9 @@ no-comments 技能（`/no-comments`）派出 Comment Sicko（保留不译），�
 
 问题挑工具。"事件能不能以坏的顺序发生"适合模型检验器（model checker）跑在设计的一个小模型上，任何语言里 TLA+ 都是这项的默认选择。"代码对每个输入是否表现正确"适合跑在代码本身上的验证器。你的语言没有可用的验证器时，agent 会直说，并用生成的输入测试真实代码，而不是给函数造一个手写模型。一个必须在任意规模下都成立的性质，可能需要一条证明。agent 会告诉你它选了哪个工具、为什么。
 
-它验证一个性质，并在代码的一个被弄坏的变体上展示这个性质失败——因为你从没见过它失败的检查，证明不了任何东西。当前代码本来就破坏该性质时，你拿到反例（counterexample）：一串用你代码的术语写成的短步骤。性质保持原样陈述，所以发现就是发现（findings stay findings，不得弱化）。产品代码不变，除非你开口要。
+它验证一个性质，并在代码的一个被弄坏的变体上展示这个性质失败——因为你从没见过它失败的检查，证明不了任何东西。当前代码本来就破坏该性质时，你拿到反例（counterexample）与反例路径（counterexample trace）：一串用你代码的术语写成的短步骤。性质保持原样陈述，所以发现就是发现（findings stay findings，不得弱化）。产品代码不变，除非你开口要。
 
-它会写一个项目本地技能，告诉下一个 agent：一次变更是否触及被验证的代码、怎么用一条命令跑检查、怎么区分真实 bug 和建模错误。交付之前，生成器会照着这个技能，对一个故意破坏该性质的临时变更跑一遍，检查必须抓住它。交接说明里写清：验证了什么、用什么工具与界限（bounds）、检查发现了什么、以及它不覆盖什么。一次通过覆盖的是模型或界限，不是整个系统。
+它会写一个项目本地技能，告诉下一个 agent：一次变更是否触及被验证的代码、怎么用一条命令跑检查、怎么区分真实 bug 和建模错误。交付之前，生成器会照着这个技能，对一个故意破坏该性质的临时变更跑一遍，检查必须抓住它。交接说明（handoff）里写清：验证了什么、用什么工具与界限（bounds）、检查发现了什么、以及它不覆盖什么。一次通过覆盖的是模型或界限，不是整个系统。
 
 该技能还记录每条检查覆盖哪段代码、以及检查最后一次与它匹配时的 commit。绕过该技能的合并与重构，会让检查继续在一段早已消失的代码的描述上通过。这类操作之后，跑 [`/maintain-formal-verification-skill`](../skills/maintain-formal-verification-skill.md)。它从代码出发更新验证、重跑、展示每条更新后的检查仍然会失败，并告诉你每个失败究竟是验证的漂移（drift），还是代码里的 bug。
 
