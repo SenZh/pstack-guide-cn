@@ -1,26 +1,8 @@
-# pstack 中文落地指南
+# pstack 中文全译本
 
-面向人类读者的 pstack 原理讲解与落地手册。**这不是 pstack 的可安装技能包**，Agent 读的仍是上游英文原文。
+pstack 的完整中文翻译，**仅供人阅读**。Agent 执行时读英文原文——技能的运行时寻址、跨技能引用全部依赖英文文件名，汉化会破坏功能（详见 [zh/GLOSSARY.md](zh/GLOSSARY.md) 的翻译取舍）。
 
-pstack 的英文文档默认你有一个可本地启动并可写入的应用、GitHub 与 `gh` CLI、以及多家云模型。这三样在受限环境里常同时缺失，缺了之后技能不会报错，只会产出格式完整、内容空转的成果。本仓库逐条说明哪些条款能直接用、哪些要替换、哪些必须删。
-
-本仓库所有内容与具体语言、框架、云厂商、公司无关，只讲方法。文中出现的配置与表格都是占位形式，需按你自己环境填入真实值。
-
-## 目录
-
-| 文件 | 内容 |
-|---|---|
-| [docs/00 版本基线与引用规范](docs/00-版本基线与引用规范.md) | 引用对应哪个上游 commit，漂移怎么检测 |
-| [docs/01 原理与设计立场](docs/01-原理与设计立场.md) | 三层结构、三个有效机制、三项代价、使用分级 |
-| [docs/02 24 条工程原则](docs/02-24条工程原则.md) | 每条原则的适用时机、原意与落地要点 |
-| [docs/03 OpenCode 与跨宿主适配](docs/03-OpenCode与跨宿主适配.md) | subagent、模型、transcript、技能目录的映射与两处坑 |
-| [docs/04 受限环境落地方案](docs/04-受限环境落地方案.md) | 无本地应用、只有远程环境时怎么落地 |
-| [docs/05 失效与误导条款清单](docs/05-失效与误导条款清单.md) | 哪些直译会错，哪些是宿主专有必须删 |
-| [docs/06 术语表与翻译取舍](docs/06-术语表与翻译取舍.md) | 保留英文的理由与最易混淆的术语对照 |
-
-同步流程见 [SYNC.md](SYNC.md)。
-
-## 上游
+## 上游与出处
 
 | 项 | 位置 |
 |---|---|
@@ -29,23 +11,39 @@ pstack 的英文文档默认你有一个可本地启动并可写入的应用、G
 | 独立镜像（MIT） | [backnotprop/pstack](https://github.com/backnotprop/pstack) |
 | 安装 | `npx skills add backnotprop/pstack` |
 
-本仓库为原创中文评述，不复制上游正文，仅短引并标注源文件与行号。基线与引用规则见 docs/00。
+本仓库不复制上游英文文件，只有译文与术语基准。与上游的关系、引用范围见 [NOTICE.md](NOTICE.md)。上游是活跃仓库，译文基于基线 commit `6c75f4e`（2026-11-02），漂移检测见 [SYNC.md](SYNC.md)。
 
-## 阅读顺序
+## 覆盖范围
 
-第一次接触：先读 01 再读 02。这两篇与语言、平台、模型无关，是 pstack 里可迁移价值最高的部分。
+**上游全部 172 个 Markdown 文档中的 170 个**已翻译（约 44 万字节译文），唯二未译：上游 `MIRROR.md` 的英文操作细节（已在 guide-4 摘译）与 `SYNC-LOG.md`（空日志）。
 
-准备在真实项目启用：直接读 04 和 05。
+| 区域 | 文件 | 内容 |
+|---|---|---|
+| 术语基准 | [zh/GLOSSARY.md](zh/GLOSSARY.md) | 翻译宪法：绝不翻译清单、标准译法表、语气规则 |
+| 总控 | [zh/skills/poteto-mode.md](zh/skills/poteto-mode.md) | 25KB 主文件全文：不可协商项、原则索引、自主权、子智能体、宿主适配、写作规范、剧本目录 |
+| 24 条原则 | [zh/skills/principles.md](zh/skills/principles.md) | Core/Architecture/Verification/Delegation/Meta 全文 |
+| 23 个剧本 | [zh/docs/playbooks-01-task.md](zh/docs/playbooks-01-task.md) · [02-autonomy](zh/docs/playbooks-02-autonomy.md) · [03-delivery](zh/docs/playbooks-03-delivery.md) | bug-fix、perf、hillclimb、取证、调查、原型、视觉一致、重构、feature、多阶段计划、自主长跑、编排、autopilot、看护、接手、暂停、清理、开 PR、交付 |
+| 24 个技能 | [zh/skills/](zh/skills/) 每技能一文件 | arena、swarm、interrogate、architect、how、why、blast-radius、statechart、recall、ketchup、ketchup-video、teach、create/maintain-verification、create/maintain-formal-verification、benchmark-checklist、figure-it-out、automate-me、reflect、correct、setup-pstack、poteto-help、make-bot-ui |
+| 工作流技能 | [zh/docs/playbooks-03-delivery.md](zh/docs/playbooks-03-delivery.md) 后半 | show-me-your-work、no-comments、unslop、technical-writing、tdd、typescript-best-practices、bro、in-your-own-words、sharpen |
+| 上游 README | [zh/skills/README.md](zh/skills/README.md) | 37.7KB 全文，含三个大表（剧本 23 行、技能 34 行、原则 24 行） |
+| 指南 10 篇 | [zh/docs/guide-1.md](zh/docs/guide-1.md) ~ [guide-4.md](zh/docs/guide-4.md) | 安装、路由、理解、设计、构建、验证交付、通宵、原则转向、个人化、配方与坑、Claude Code 适配、镜像说明 |
+| 子智能体 | [zh/agents/subagents.md](zh/agents/subagents.md) | poteto-agent 与 Comment Sicko 的 system prompt 全文 |
 
-## 门禁
+## 阅读路径建议
+
+- **只想要 pstack 的思想**：读 [poteto-mode.md](zh/skills/poteto-mode.md) 的原则一节 + [principles.md](zh/skills/principles.md)。33KB，与语言、平台、模型无关。
+- **准备实际启用**：guide-1 → guide-2 → [setup-pstack.md](zh/skills/setup-pstack.md)，然后对照 [GLOSSARY](zh/GLOSSARY.md) 读你用得到的技能原文。
+- **翻译质量争议**：一律以 [GLOSSARY.md](zh/GLOSSARY.md) 为准；GLOSSARY 未覆盖的以英文原文为准。
+
+## 质量门禁
 
 ```powershell
-pwsh ./scripts/sync-check.ps1   # 引用是否仍对得上上游
-pwsh ./scripts/slug-lint.ps1    # 标识符是否被汉化
+pwsh ./scripts/sync-check.ps1   # 上游漂移检测：译文基线 vs 上游 blob sha
+pwsh ./scripts/slug-lint.ps1    # 标识符门禁：功能标识符被汉化即报错
 ```
 
-两条都在 CI 里跑，失败自动开 issue。
+两条都进 CI（每周一 + 手动触发），失败自动开 issue。slug-lint 自身按上游 `Able to fail` 原则验证过：注入 `principle-懒惰协议` 确实报错退出 1。
 
 ## 许可
 
-原创中文内容以 MIT 发布，见 [LICENSE](LICENSE)。与上游的关系、引用范围、致谢见 [NOTICE.md](NOTICE.md)。
+译文与原创内容 MIT，见 [LICENSE](LICENSE)。上游 pstack 由 poteto 以 MIT 发布，归其所有；出处与引用范围见 [NOTICE.md](NOTICE.md)。
