@@ -1,6 +1,6 @@
 # slug-lint.ps1
 #
-# 门禁：校验本仓库正文里出现的功能标识符未被汉化。
+# 门禁：校验译文里出现的功能标识符未被汉化。
 #
 # 判据：一个标识符 token（SKILL.md 路径、principle-*、playbooks/*.md、pstack-models.md）
 # 本身若含中文字符，则视为被翻译。句子里的中文叙述不算。
@@ -8,19 +8,27 @@
 $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$docs = Join-Path $root "docs"
-$failures = @()
+$zh = Join-Path $root "zh"
 
 $files = @()
-$files += Get-ChildItem -Path $docs -Filter *.md -Recurse
-$readme = Join-Path $root "README.md"
-if (Test-Path $readme) { $files += Get-Item $readme }
+if (Test-Path $zh) { $files += Get-ChildItem -Path $zh -Filter *.md -Recurse }
+foreach ($extra in @("README.md", "NOTICE.md", "SYNC.md")) {
+    $p = Join-Path $root $extra
+    if (Test-Path $p) { $files += Get-Item $p }
+}
+
+if ($files.Count -eq 0) {
+    Write-Output "LINT FAILED: 没有找到任何译文文件，门禁空转"
+    exit 1
+}
+
+$failures = @()
 
 # 按 token 边界切分，取每个片段单独判断是否含中文
 $tokenSplit = '[（）()\[\]{}，。：；、！？\s`"“”‘’<>\|]+'
 
 foreach ($file in $files) {
-    $lines = Get-Content $file.FullName
+    $lines = [System.IO.File]::ReadAllLines($file.FullName)
     $lineNo = 0
     foreach ($line in $lines) {
         $lineNo++

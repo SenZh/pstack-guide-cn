@@ -149,7 +149,7 @@ run 结束、交回之前，检查日志说了真话。从当前 workspace 的�
 
 ### 步骤
 
-1. 派 `Task`，`subagent_type: "comment-sicko"`。传范围。按 **poteto-mode** 的"子智能体"一节选档位与速度。不复述其规则。宿主没注册 comment-sicko（Cursor 之外的一切宿主）时改派 general 子智能体：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。其 prompt 是 [`references/comment-sicko.md`](references/comment-sicko.md) 原文，加范围。宿主没有子智能体工具（如无扩展的 Pi）时，自己在一次全新遍历中执行该 prompt。
+1. 派 `Task`，`subagent_type: "comment-sicko"`。传范围。按 **poteto-mode** 的"子智能体"一节选档位与速度。不复述其规则。宿主没注册 comment-sicko（Cursor 之外的一切宿主）时改派 general 子智能体：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。其 prompt 是 [`references/comment-sicko.md`](https://github.com/backnotprop/pstack/blob/main/skills/PLACEHOLDER/references/comment-sicko.md) 原文，加范围。宿主没有子智能体工具（如无扩展的 Pi）时，自己在一次全新遍历中执行该 prompt。
 2. 检查其报告与 diff。拒绝：应用代码编辑、越界、带异常保护的删除、失实的 `MUST KILL` 理由、以及把刻意保留代码当有罪的 flag。针对"我们代码里的意外"的 flag 保持可执行。不恢复那些注释。一条 keep（保留）只有在证明它关于我们无法改变的东西时才存活。审计遗漏的作用域 lint 与 TypeScript 抑制。正确性或安全类抑制保持可执行的 `MUST KILL`。只有精确的例外与作用域内的证明才能恢复删除。接受单薄的 `IMPORTANT` 或"勿删"类 kill/keep 之前，对其符号跑 `/how` 或 `/why`。kill 含糊就不恢复。keep 被驳倒或仍含糊就删——关于外部规则的 `REVIEW` 类 keep 除外，它留着直到有人核实那条规则，并报告为 open。被拒绝的报告回退后点名失败原因重跑一次。重跑仍被拒，则只回退其被拒发现、报告 open、继续用被接受的。
 3. 直接修复琐碎的被接受 flag：删死路径、删参数、改用真实 API。某修复需要定形状时，对被接受集合及其周边代码跑一次 `/architect`。停在草图。architect 定形状，第 4 步实现。
 4. 在范围内实现最小根因修复。移除每个被点名的变通。根因出界时，落地最小的界内修复，其余报告 open。**principle-fix-root-causes** 与 **principle-redesign-from-first-principles** 技能只指导意图。两者都不授权扩大围栏或修围栏外的实例。绝不钉症状守卫。

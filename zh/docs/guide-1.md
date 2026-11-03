@@ -69,7 +69,7 @@ Claude Code 里运行 `/plugin marketplace add cursor/plugins`，然后 `/plugin
 /setup-pstack
 ```
 
-[`/setup-pstack`](setup-pstack.md) 探测你有权访问的模型，问推理预算，展示每个角色（代码委派、判断、评审面板），问你要什么。回答问题。它写 `~/.cursor/rules/pstack-models.mdc`，一条所有 pstack 技能都读的小规则。
+[`/setup-pstack`](../skills/setup-pstack.md) 探测你有权访问的模型，问推理预算，展示每个角色（代码委派、判断、评审面板），问你要什么。回答问题。它写 `~/.cursor/rules/pstack-models.mdc`，一条所有 pstack 技能都读的小规则。
 
 默认以 `xhigh` 推理运行，等价于 `large` 预算。`unlimited` 把每个模型提到最高档，上限 `max`。Opus 到 `max`。Grok 封顶 `xhigh`，所以留在那里。`medium` 与 `small` 降低推理、少花 token。
 
@@ -79,13 +79,13 @@ Claude Code 里运行 `/plugin marketplace add cursor/plugins`，然后 `/plugin
 
 ### 接受或拒绝验证技能的提议
 
-安装末尾，`/setup-pstack` 会找你项目里证明应用行为的手段——`verify-*` 技能或现成 harness。两者都没有时，它会提议一次用 [`/create-verification-skill`](create-verification-skill.md) 生成一个。
+安装末尾，`/setup-pstack` 会找你项目里证明应用行为的手段——`verify-*` 技能或现成 harness。两者都没有时，它会提议一次用 [`/create-verification-skill`](../skills/create-verification-skill.md) 生成一个。
 
 答应，它写 `.cursor/skills/verify-<app>/`，一个项目本地技能，教 agent 以用户的方式驱动你的应用。交付前它会实跑证明技能本身有效。拒绝，安装继续。你随时可以自己跑 `/create-verification-skill`。详见"验证与交付"篇。
 
 如果你是 pstack 新手，答应。能自检的 agent 会一直跑到检查通过；不能自检的 agent 把每个结果都交回给你手工查。本指南所有内容里，验证技能回报最高。
 
-然后安装会提议一次用 [`/create-formal-verification-skill`](create-formal-verification-skill.md) 生成形式化验证技能，除非项目已有。测试检查有人想到要写的用例；形式化验证技能检查代码的一个关键性质——例如"一个任务绝不同时跑两次"——在声明范围内的每一种情况下成立。你的代码有并发、重试、状态机或解析器时答应，那里缺陷代价高、测试很难碰到会坏的那个用例。否则拒绝，情况变了再跑。
+然后安装会提议一次用 [`/create-formal-verification-skill`](../skills/create-formal-verification-skill.md) 生成形式化验证技能，除非项目已有。测试检查有人想到要写的用例；形式化验证技能检查代码的一个关键性质——例如"一个任务绝不同时跑两次"——在声明范围内的每一种情况下成立。你的代码有并发、重试、状态机或解析器时答应，那里缺陷代价高、测试很难碰到会坏的那个用例。否则拒绝，情况变了再跑。
 
 安装后，开新 chat。模型规则只对新会话生效。
 
@@ -176,9 +176,9 @@ flowchart TD
 /poteto-mode read this thread. restate the underlying issue in your own words, in plain english. don't change any code yet.
 ```
 
-误读会在复述里现形，早于任何代码存在。在那里纠正，成本是一条消息而不是一次错误修复。只要复述、不进剧本，跑 [`/in-your-own-words`](in-your-own-words.md)：它复述 agent 认为你的目标是什么、你想解决什么问题。
+误读会在复述里现形，早于任何代码存在。在那里纠正，成本是一条消息而不是一次错误修复。只要复述、不进剧本，跑 [`/in-your-own-words`](../skills/in-your-own-words.md)：它复述 agent 认为你的目标是什么、你想解决什么问题。
 
-拿不准 prompt 是否瞄准了，发送前跑 [`/sharpen`](sharpen.md)：
+拿不准 prompt 是否瞄准了，发送前跑 [`/sharpen`](../skills/sharpen.md)：
 
 ```text
 /sharpen write a migration guide for the v2 config format.
@@ -242,11 +242,11 @@ Worktree cleanup 剧本按合并状态、未提交工作、哪些会话还在触
 /poteto-mode im stepping away. keep going until the migration check reports zero old callers. log your decisions.
 ```
 
-你之后才审阅的工作经 [`/figure-it-out`](figure-it-out.md) 路由，它设计运行阶段并保留 [`/show-me-your-work`](show-me-your-work.md) 决策日志。"睡觉时干活"篇讲完整的通宵契约。
+你之后才审阅的工作经 [`/figure-it-out`](../skills/figure-it-out.md) 路由，它设计运行阶段并保留 [`/show-me-your-work`](../skills/show-me-your-work.md) 决策日志。"睡觉时干活"篇讲完整的通宵契约。
 
 **坑**：不要在 prompt 里枚举技能（"use /how, then /architect, then /arena..."）。剧本本来就给它们排序，手写序列常常重排或丢掉剧本本会保留的步骤。只在你想覆盖某个具体选择时才点名技能。
 
-完整路由规则读 [`poteto-mode`](poteto-mode.md) 本体。
+完整路由规则读 [`poteto-mode`](../skills/poteto-mode.md) 本体。
 
 ---
 

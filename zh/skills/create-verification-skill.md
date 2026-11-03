@@ -45,7 +45,7 @@ disable-model-invocation: true
 
 ## 3. 播种功能地图
 
-创建 `<skills>/verify-<app>/features/README.md`，外加你能识别的每个用户可见功能一个文件（起步瞄准前 3-5 个，从路由、命令、菜单或文档来）。遵循 [`references/feature-map-example/`](references/feature-map-example/) 的形状：一个 README 索引加每功能一个文件。每个文件从用户视角回答：这个功能是什么、怎么到达它、怎么用宿主驱动它、什么可观测的终态证明它工作。四个 H2 是 `Sub-features`、`How to get to it (user POV)`、`Driving it with <harness>` 与 `Gotchas`。种子数据缺某个旅程需要的前置条件的话，该旅程报告失败，原因写进那个功能的 `Gotchas`。绝不为让旅程通过而削弱旅程。地图是仓库持续维护的验证源；地图列出了其他入口时，只驱动一个方便入口的证明是不完整的。
+创建 `<skills>/verify-<app>/features/README.md`，外加你能识别的每个用户可见功能一个文件（起步瞄准前 3-5 个，从路由、命令、菜单或文档来）。遵循 [`references/feature-map-example/`](https://github.com/backnotprop/pstack/blob/main/skills/PLACEHOLDER/references/feature-map-example/) 的形状：一个 README 索引加每功能一个文件。每个文件从用户视角回答：这个功能是什么、怎么到达它、怎么用宿主驱动它、什么可观测的终态证明它工作。四个 H2 是 `Sub-features`、`How to get to it (user POV)`、`Driving it with <harness>` 与 `Gotchas`。种子数据缺某个旅程需要的前置条件的话，该旅程报告失败，原因写进那个功能的 `Gotchas`。绝不为让旅程通过而削弱旅程。地图是仓库持续维护的验证源；地图列出了其他入口时，只驱动一个方便入口的证明是不完整的。
 
 ## 4. 交付前证明生成的技能
 

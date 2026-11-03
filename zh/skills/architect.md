@@ -44,7 +44,7 @@ disable-model-invocation: true
 
 做两遍设计（design it twice）。综合之前，强制至少两个结构上互不相同的候选，哪怕第一个看起来就够了。这是 **exhaust-the-design-space** 原则技能的具体化。要的是整体形状层面的备选，不是同一个形状内部的点修。
 
-综合之前，每个候选都对照 [`references/design-red-flags.md`](references/design-red-flags.md) 筛一遍。假定下一个贡献者是一个 agent：只看它打开过的文件、复制最靠近的示例、走能编译的最短路径。选那种"从某一个文件看正确的变更，对整个仓库也正确"的设计。
+综合之前，每个候选都对照 [`references/design-red-flags.md`](https://github.com/backnotprop/pstack/blob/main/skills/PLACEHOLDER/references/design-red-flags.md) 筛一遍。假定下一个贡献者是一个 agent：只看它打开过的文件、复制最靠近的示例、走能编译的最短路径。选那种"从某一个文件看正确的变更，对整个仓库也正确"的设计。
 
 在接口深度上比较可行的候选。选把更多复杂度藏在一个更小、更简单的公开交互面（surface）后面的设计。富接口可以集中能力来让调用链保持短，而不是把能力散落到各层。
 

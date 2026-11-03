@@ -23,7 +23,7 @@ disable-model-invocation: true
 用户问的是"怎么做"，而一次 pstack 运行花的是真金白银的 token，所以把 prompt 留给他们自己发。
 
 一条要求干活的消息（如 "use pstack to fix this bug"）不是帮助类问题。
-读 [`poteto-mode`](../poteto-mode/SKILL.md)，在它之下干活，并提一次 Custom Mode 可以让它常驻。
+读 [`poteto-mode`](./poteto-mode.md)，在它之下干活，并提一次 Custom Mode 可以让它常驻。
 
 本文件把问题映射到持有答案的技能与指南页。
 细节归那些文件所有。
@@ -63,15 +63,15 @@ disable-model-invocation: true
 
 1. 在聊天里用 `/add-plugin pstack` 安装，或从侧边栏的 Customize 安装。
    Cursor 之外，跑 `npx skills add backnotprop/pstack` 并挑技能。
-2. 跑 [`/setup-pstack`](../setup-pstack/SKILL.md)。
+2. 跑 [`/setup-pstack`](./setup-pstack.md)。
    它询问推理预算，为每个角色映射模型，并写入一条规则。规则对新聊天生效。
    随后它会各推荐一次为项目生成验证技能与形式化验证技能，除非项目已有其一。
 3. 用 `/poteto-mode` 开一个真实任务，带一个目标，和一个能判过判不过的检查。
 
 安装本身什么也不改变，直到用户调用某个技能。
 只有 `/setup-pstack` 从用户的话里加载。
-[README](../../README.md) 与[指南第 1 页](../../docs/guide/01-setup.md)有细节。
-主动提出帮他们一起打磨第一条 prompt，依据 [`references/prompting.md`](references/prompting.md)。
+[README](../../README.md) 与[指南第 1 页](../docs/guide-1.md)有细节。
+主动提出帮他们一起打磨第一条 prompt，依据 [`references/prompting.md`](https://github.com/backnotprop/pstack/blob/main/skills/PLACEHOLDER/references/prompting.md)。
 
 担心的是成本的话，讲清 token 花在哪、怎么少花。
 pstack 的额外 token 花在子智能体（subagent）与审阅 panel 上。
@@ -82,10 +82,10 @@ pstack 的额外 token 花在子智能体（subagent）与审阅 panel 上。
 
 pstack 为 Cursor 而建，也能装进 Claude Code：先 `/plugin marketplace add cursor/plugins`，再 `/plugin install pstack@cursor-plugins`。
 在那里每个命令带 `pstack:` 前缀，如 `/pstack:poteto-mode`。
-[Claude Code 适配层](../../docs/harness/claude-code.md)负责映射 Cursor 的名字；需要 Cursor 专属功能（如 Bugbot 或 Automations）的步骤会被跳过并附一行说明。
+[Claude Code 适配层](../docs/guide-4.md)负责映射 Cursor 的名字；需要 Cursor 专属功能（如 Bugbot 或 Automations）的步骤会被跳过并附一行说明。
 
 本镜像的技能在其他宿主环境（Claude Code、Codex、Pi、OpenCode 及其他）也能用，走 `npx skills add backnotprop/pstack`。
-[poteto-mode](../poteto-mode/SKILL.md) 的 Harness 章节把 Cursor 的子智能体、提问、会话记录与配置路径映射到对应宿主环境自己的。
+[poteto-mode](./poteto-mode.md) 的 Harness 章节把 Cursor 的子智能体、提问、会话记录与配置路径映射到对应宿主环境自己的。
 Custom Modes 是 Cursor 的功能。
 
 ## Start a task with `/poteto-mode`（用 /poteto-mode 开工）
@@ -94,8 +94,8 @@ Custom Modes 是 Cursor 的功能。
 它跳过的步骤以 `skip: <reason>` 留在清单里。
 好的 prompt 陈述目标以及怎么算完成。
 它不罗列技能，因为手写的顺序往往会丢掉或打乱剧本本会保住的步骤。
-帮人打磨 prompt 之前先读 [`references/prompting.md`](references/prompting.md)。
-[指南第 2 页](../../docs/guide/02-poteto-mode.md)有示例。
+帮人打磨 prompt 之前先读 [`references/prompting.md`](https://github.com/backnotprop/pstack/blob/main/skills/PLACEHOLDER/references/prompting.md)。
+[指南第 2 页](../docs/guide-1.md)有示例。
 
 `/poteto-mode` 是否常驻取决于用户怎么启动它：
 
@@ -118,39 +118,39 @@ Custom Modes 是 Cursor 的功能。
 
 | 用户想要 | 技能 |
 |---|---|
-| 以严谨度做任何非平凡任务 | [`/poteto-mode`](../poteto-mode/SKILL.md) |
-| 让 agent 开工前先复述它理解的目标与问题 | [`/in-your-own-words`](../in-your-own-words/SKILL.md) |
-| 发送前把 prompt 改写得更深而非更大：顶级专业人士会补充什么、他们的原材料与方法、外加一道外部核查。返回改写后的 prompt，不执行任务 | [`/sharpen`](../sharpen/SKILL.md) |
-| 弄清代码现在怎么工作，或新代码该放哪 | [`/how`](../how/SKILL.md) |
-| 弄清代码为什么长这样，或某个数字从哪来 | [`/why`](../why/SKILL.md) |
-| 平实地讲解一个改动或子系统 | [`/teach`](../teach/SKILL.md) |
-| 追自己的近况：最近在某主题上做过什么 | [`/recall`](../recall/SKILL.md) |
-| 追本聊天自用户上一条消息以来发生了什么，平实的语言加小型可视化，列出所有等他们拍板的条目，且回应本身足以让他们拍板 | [`/ketchup`](../ketchup/SKILL.md) |
-| 像 `/ketchup` 那样追况，但做成带字幕的幻灯短视频，待拍板的调用以文字排在下方 | [`/ketchup-video`](../ketchup-video/SKILL.md) |
-| 弄清一个小 diff 可能破坏它之外的什么 | [`/blast-radius`](../blast-radius/SKILL.md) |
-| 在跨越函数边界的代码之前定下类型与模块形状 | [`/architect`](../architect/SKILL.md) |
-| 对同一份任务简报（brief）拿多个版本，合并出最好的一个 | [`/arena`](../arena/SKILL.md) |
-| 以云端 agent 对切片并行检查，或让 worker 竞速 | [`/swarm`](../swarm/SKILL.md) |
-| 让不同模型审一个 diff 并设法弄坏它 | [`/interrogate`](../interrogate/SKILL.md) |
-| 存在便宜本地测试时以测试先行修 bug | [`/tdd`](../tdd/SKILL.md) |
-| 对 `.ts`/`.tsx` 工作应用 TypeScript 规则 | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
-| review 前清掉注释，且用一个没写过它们的审阅者 | [`/no-comments`](../no-comments/SKILL.md) |
-| 清除散文里的 AI 腔 | [`/unslop`](../unslop/SKILL.md) |
-| 按标准写文档、RFC、README、PR 描述或 commit message | [`/technical-writing`](../technical-writing/SKILL.md) |
-| 用平实的话把上一条回应再讲一遍 | [`/bro`](../bro/SKILL.md) |
-| 给 agent 一条脚本化路径去驱动应用并证明行为 | [`/create-verification-skill`](../create-verification-skill/SKILL.md) |
-| 让验证技能及其功能地图与应用重新对齐 | [`/maintain-verification-skill`](../maintain-verification-skill/SKILL.md) |
-| 形式化验证竞速、不变式或其他测试很少触达的性质 | [`/create-formal-verification-skill`](../create-formal-verification-skill/SKILL.md) |
-| 被覆盖代码变更后把形式化验证拉回一致，并弄清失败是漂移还是 bug | [`/maintain-formal-verification-skill`](../maintain-formal-verification-skill/SKILL.md) |
-| 向 PM 或设计师展示用户所见，画成经 TLA+ 模型检验的图，标注破坏规则的每个状态的最短路径 | [`/statechart`](../statechart/SKILL.md) |
-| 在汇报或采信一个性能数字之前先审查它 | [`/benchmark-checklist`](../benchmark-checklist/SKILL.md) |
-| 跑一次大型或横切的变更，或一次离开后回来审阅的变更 | [`/figure-it-out`](../figure-it-out/SKILL.md) |
-| 运行期间记决策日志，事后审阅它 | [`/show-me-your-work`](../show-me-your-work/SKILL.md) |
-| 为每个角色挑模型并定推理预算 | [`/setup-pstack`](../setup-pstack/SKILL.md) |
-| 把用户自己的工作习惯变成个人 mode 技能 | [`/automate-me`](../automate-me/SKILL.md) |
-| 把一次完成的任务教给我们的东西变成技能修改 | [`/reflect`](../reflect/SKILL.md) |
-| 阻止 agent 在本仓库重复犯同样的错误 | [`/correct`](../correct/SKILL.md) |
-| 构建一个按钮能经 webhook 唤醒 Grok Bot 的页面 | [`/make-bot-ui`](../make-bot-ui/SKILL.md) |
+| 以严谨度做任何非平凡任务 | [`/poteto-mode`](./poteto-mode.md) |
+| 让 agent 开工前先复述它理解的目标与问题 | [`/in-your-own-words`](./in-your-own-words.md) |
+| 发送前把 prompt 改写得更深而非更大：顶级专业人士会补充什么、他们的原材料与方法、外加一道外部核查。返回改写后的 prompt，不执行任务 | [`/sharpen`](./sharpen.md) |
+| 弄清代码现在怎么工作，或新代码该放哪 | [`/how`](./how.md) |
+| 弄清代码为什么长这样，或某个数字从哪来 | [`/why`](./why.md) |
+| 平实地讲解一个改动或子系统 | [`/teach`](./teach.md) |
+| 追自己的近况：最近在某主题上做过什么 | [`/recall`](./recall.md) |
+| 追本聊天自用户上一条消息以来发生了什么，平实的语言加小型可视化，列出所有等他们拍板的条目，且回应本身足以让他们拍板 | [`/ketchup`](./ketchup.md) |
+| 像 `/ketchup` 那样追况，但做成带字幕的幻灯短视频，待拍板的调用以文字排在下方 | [`/ketchup-video`](./ketchup-video.md) |
+| 弄清一个小 diff 可能破坏它之外的什么 | [`/blast-radius`](./blast-radius.md) |
+| 在跨越函数边界的代码之前定下类型与模块形状 | [`/architect`](./architect.md) |
+| 对同一份任务简报（brief）拿多个版本，合并出最好的一个 | [`/arena`](./arena.md) |
+| 以云端 agent 对切片并行检查，或让 worker 竞速 | [`/swarm`](./swarm.md) |
+| 让不同模型审一个 diff 并设法弄坏它 | [`/interrogate`](./interrogate.md) |
+| 存在便宜本地测试时以测试先行修 bug | [`/tdd`](./tdd.md) |
+| 对 `.ts`/`.tsx` 工作应用 TypeScript 规则 | [`/typescript-best-practices`](./typescript-best-practices.md) |
+| review 前清掉注释，且用一个没写过它们的审阅者 | [`/no-comments`](./no-comments.md) |
+| 清除散文里的 AI 腔 | [`/unslop`](./unslop.md) |
+| 按标准写文档、RFC、README、PR 描述或 commit message | [`/technical-writing`](./technical-writing.md) |
+| 用平实的话把上一条回应再讲一遍 | [`/bro`](./bro.md) |
+| 给 agent 一条脚本化路径去驱动应用并证明行为 | [`/create-verification-skill`](./create-verification-skill.md) |
+| 让验证技能及其功能地图与应用重新对齐 | [`/maintain-verification-skill`](./maintain-verification-skill.md) |
+| 形式化验证竞速、不变式或其他测试很少触达的性质 | [`/create-formal-verification-skill`](./create-formal-verification-skill.md) |
+| 被覆盖代码变更后把形式化验证拉回一致，并弄清失败是漂移还是 bug | [`/maintain-formal-verification-skill`](./maintain-formal-verification-skill.md) |
+| 向 PM 或设计师展示用户所见，画成经 TLA+ 模型检验的图，标注破坏规则的每个状态的最短路径 | [`/statechart`](./statechart.md) |
+| 在汇报或采信一个性能数字之前先审查它 | [`/benchmark-checklist`](./benchmark-checklist.md) |
+| 跑一次大型或横切的变更，或一次离开后回来审阅的变更 | [`/figure-it-out`](./figure-it-out.md) |
+| 运行期间记决策日志，事后审阅它 | [`/show-me-your-work`](./show-me-your-work.md) |
+| 为每个角色挑模型并定推理预算 | [`/setup-pstack`](./setup-pstack.md) |
+| 把用户自己的工作习惯变成个人 mode 技能 | [`/automate-me`](./automate-me.md) |
+| 把一次完成的任务教给我们的东西变成技能修改 | [`/reflect`](./reflect.md) |
+| 阻止 agent 在本仓库重复犯同样的错误 | [`/correct`](./correct.md) |
+| 构建一个按钮能经 webhook 唤醒 Grok Bot 的页面 | [`/make-bot-ui`](./make-bot-ui.md) |
 | 在 pstack 里找路 | `/poteto-help` |
 
 本文件旁边有技能目录不在上表里的话，读它的 frontmatter，按其 description 路由。
@@ -192,18 +192,18 @@ Custom Modes 是 Cursor 的功能。
 - "run the eval playbook" 触发 Eval。
 
 没有 `/poteto-mode` 的话，"babysit this pr" 这类短语可能误触 Cursor 自带的同职责技能。
-[poteto-mode](../poteto-mode/SKILL.md) 的 Playbooks 章节列出每份剧本及适用时机。
-[指南第 6 页](../../docs/guide/06-verify-and-ship.md)覆盖开 PR、看护（babysit）与落地（land）PR。
+[poteto-mode](./poteto-mode.md) 的 Playbooks 章节列出每份剧本及适用时机。
+[指南第 6 页](../docs/guide-2.md)覆盖开 PR、看护（babysit）与落地（land）PR。
 
 pstack 没有规划技能。Cursor 的 Plan Mode 与它并行工作。
-跨阶段或堆叠（stack）PR 的活，向 `/poteto-mode` 要计划会触发 [Multi-phase plan 剧本](../poteto-mode/playbooks/multi-phase-plan.md)，它写计划、不实现。
+跨阶段或堆叠（stack）PR 的活，向 `/poteto-mode` 要计划会触发 [Multi-phase plan 剧本](../docs/playbooks-01-task.md)，它写计划、不实现。
 设计类问题，Prototype 剧本或 `/architect` 先在代码里定夺。
 
 原则（principles）是单条规则的技能，`/poteto-mode` 读它们并在回应里引用。
 用户很少直接调用。
 他们用名字来施加影响，如 "apply prove it works. show me the real output."。
 输入 `/principle-<name>` 仍可按需加载一个。
-[指南第 8 页](../../docs/guide/08-principles.md)列出了它们。
+[指南第 8 页](../docs/guide-3.md)列出了它们。
 
 ## Fix a run that went wrong（修一次出问题的运行）
 
@@ -215,24 +215,24 @@ pstack 没有规划技能。Cursor 的 Plan Mode 与它并行工作。
 | 运行比预期贵 | 看 Get set up 一节的成本段落。 |
 | 某个技能没有自行加载 | 只有 `/setup-pstack` 从用户的话里加载。其余技能靠用户输入，或靠 `/poteto-mode` 调用，而它不会调用每一个技能。 |
 | 并行 agent 互相覆盖 | 给每个 agent 自己的 worktree，或以云端 agent 运行，它们各自有独立的机器。 |
-| 通宵（overnight）运行有动静但一无所成 | `/loop` 需要一个能判过判不过的检查，不是一个时长。见[指南第 7 页](../../docs/guide/07-overnight.md)。 |
+| 通宵（overnight）运行有动静但一无所成 | `/loop` 需要一个能判过判不过的检查，不是一个时长。见[指南第 7 页](../docs/guide-3.md)。 |
 | 回应拿绿色构建当成功证据 | 要真实的命令、流程、落库的值或 profile。这是 prove-it-works 原则。 |
 
-对跑偏的运行，[`references/prompting.md`](references/prompting.md) 有单行纠偏语。
-[指南第 10 页](../../docs/guide/10-recipes-and-pitfalls.md)有更多坑与值得照抄的配方。
+对跑偏的运行，[`references/prompting.md`](https://github.com/backnotprop/pstack/blob/main/skills/PLACEHOLDER/references/prompting.md) 有单行纠偏语。
+[指南第 10 页](../docs/guide-4.md)有更多坑与值得照抄的配方。
 
 ## Make pstack my own（把 pstack 变成自己的）
 
-- [`/automate-me`](../automate-me/SKILL.md) 从用户自己的历史起草一份个人 mode 技能，与 `/poteto-mode` 并用。
-- [`/reflect`](../reflect/SKILL.md) 在一次会话之后把它的经验教训变成用户批准的技能修改。
+- [`/automate-me`](./automate-me.md) 从用户自己的历史起草一份个人 mode 技能，与 `/poteto-mode` 并用。
+- [`/reflect`](./reflect.md) 在一次会话之后把它的经验教训变成用户批准的技能修改。
 - `/poteto-mode write a skill for <workflow>` 触发 authoring 剧本。
   eval 剧本对技能修改做盲测。
 - 坏掉的技能在它自己的 PR 里修，不要在出错的那个功能工作里顺手修。
 
-[指南第 9 页](../../docs/guide/09-make-it-yours.md)逐一覆盖这些。
+[指南第 9 页](../docs/guide-3.md)逐一覆盖这些。
 
 ## Reply（回应）
 
 答案先行。
-示例 prompt 至多给一条，放代码块里，[`references/recipes.md`](references/recipes.md) 有合适的就改编一条，然后附该文件的链接。
+示例 prompt 至多给一条，放代码块里，[`references/recipes.md`](https://github.com/backnotprop/pstack/blob/main/skills/PLACEHOLDER/references/recipes.md) 有合适的就改编一条，然后附该文件的链接。
 用户没要完整地图就保持简短。

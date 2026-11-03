@@ -1,6 +1,6 @@
 # pstack 上游 README 全文翻译
 
-> 翻译自 backnotprop/pstack 仓库的 README.md（镜像版，含 mirror 头部与上游正文）。**本译文仅供人阅读，Agent 不消费本文件**，Agent 执行时读英文原文。术语基准见 [GLOSSARY.md](GLOSSARY.md)。
+> 翻译自 backnotprop/pstack 仓库的 README.md（镜像版，含 mirror 头部与上游正文）。**本译文仅供人阅读，Agent 不消费本文件**，Agent 执行时读英文原文。术语基准见 [GLOSSARY.md](../GLOSSARY.md)。
 >
 > 链接改写说明：源文档中的相对链接（`./skills/...`、`./docs/...`、`./agents/...`、`./automations/...`）已改写为 `https://github.com/backnotprop/pstack/blob/main/<路径>` 绝对链接；图片引用以"[图：<alt 译文>]"替代；代码块（安装命令、prompt 示例）保留英文原样。
 

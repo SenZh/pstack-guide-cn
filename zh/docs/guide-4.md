@@ -154,7 +154,7 @@ apply prove it works. show me the real output, not the build log.
 /bro
 ```
 
-整条 prompt 就是这两个词。[`/bro`](../../skills/bro/SKILL.md) 把最后一条消息复述得像一个人对另一个人说话，没有术语，更短。当一条回复技术上很详尽、你却还是不知道它说了什么时，用它。
+整条 prompt 就是这两个词。[`/bro`](../skills/bro.md) 把最后一条消息复述得像一个人对另一个人说话，没有术语，更短。当一条回复技术上很详尽、你却还是不知道它说了什么时，用它。
 
 ### 接上一个你放着跑的 chat（Catch up on a chat you left running）
 
@@ -162,9 +162,9 @@ apply prove it works. show me the real output, not the build log.
 /ketchup
 ```
 
-[`/ketchup`](../../skills/ketchup/SKILL.md) 用平实的话告诉你，自你上一条消息以来发生了什么，然后逐项列出等你裁决的调用、它的选择、证据与风险。报告期间它什么都不改。
+[`/ketchup`](../skills/ketchup.md) 用平实的话告诉你，自你上一条消息以来发生了什么，然后逐项列出等你裁决的调用、它的选择、证据与风险。报告期间它什么都不改。
 
-想"看"这份小结，跑 [`/ketchup-video`](../../skills/ketchup-video/SKILL.md)。它用一组带字幕的幻灯片短视频展示发生了什么，并把等你裁决的调用以文字列在视频下面。
+想"看"这份小结，跑 [`/ketchup-video`](../skills/ketchup-video.md)。它用一组带字幕的幻灯片短视频展示发生了什么，并把等你裁决的调用以文字列在视频下面。
 
 ### 那些坑（The pitfalls）
 

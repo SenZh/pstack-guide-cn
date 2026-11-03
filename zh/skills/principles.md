@@ -1,6 +1,6 @@
 # 二十四条工程原则全文翻译
 
-> 翻译自 `skills/principle-*/SKILL.md`（24 个文件）。每条原则是一个独立技能，poteto-mode 在任务开始时读内联索引，应用某条时读该条的完整原文。**本译文仅供人阅读，Agent 执行时读英文原文。** 术语基准见 [GLOSSARY.md](GLOSSARY.md)。
+> 翻译自 `skills/principle-*/SKILL.md`（24 个文件）。每条原则是一个独立技能，poteto-mode 在任务开始时读内联索引，应用某条时读该条的完整原文。**本译文仅供人阅读，Agent 执行时读英文原文。** 术语基准见 [GLOSSARY.md](../GLOSSARY.md)。
 >
 > 每条保留：YAML 的 `name`（寻址键，绝不汉化）、适用时机（description）、正文全部条款。原则间的交叉引用写为原路径。
 
@@ -62,13 +62,13 @@
 
 **模式：**
 - **把前提写下来。** 前提是每个失败修复都假设的那一句话。
-- **下一次修复之前先检验前提。** 找一个"若前提为假则结果不同"的观测，把它做出来。看失败的分布方式，不只看失败的大小。让检查可重跑，按 [Build the Lever](../principle-build-the-lever/SKILL.md)。
-- **跟着证据走。** 它与前提矛盾，原因就在别处。找失败之间前提没能预测的共同点。它确认前提，就按 [Fix Root Causes](../principle-fix-root-causes/SKILL.md) 问下一个"为什么"。更早的修复可能治的是后果而不是原因。
-- **移除条件，而不是补偿它**，按 [Laziness Protocol](../principle-laziness-protocol/SKILL.md)。若证据显示某一部分总是落在输的一边，改变把它放到那里的东西。一个在事后清理的机制让原因原地不动，还给每次运行加活。
+- **下一次修复之前先检验前提。** 找一个"若前提为假则结果不同"的观测，把它做出来。看失败的分布方式，不只看失败的大小。让检查可重跑，按 [Build the Lever](./principles.md)。
+- **跟着证据走。** 它与前提矛盾，原因就在别处。找失败之间前提没能预测的共同点。它确认前提，就按 [Fix Root Causes](./principles.md) 问下一个"为什么"。更早的修复可能治的是后果而不是原因。
+- **移除条件，而不是补偿它**，按 [Laziness Protocol](./principles.md)。若证据显示某一部分总是落在输的一边，改变把它放到那里的东西。一个在事后清理的机制让原因原地不动，还给每次运行加活。
 
 **停止条件**：前提写下来并检验之前，不开始下一个修复。
 
-本原则区别于 [Redesign from First Principles](../principle-redesign-from-first-principles/SKILL.md)：后者围绕新需求重建设计；本条质疑当前设计所假设的一个事实。
+本原则区别于 [Redesign from First Principles](./principles.md)：后者围绕新需求重建设计；本条质疑当前设计所假设的一个事实。
 
 ---
 
@@ -93,7 +93,7 @@
 
 **适用时机**：审阅或塑形难以追踪的代码。数清问题与答案之间的层数、读者脑中的隐藏状态；收掉单调用方包装，缩小可变作用域。
 
-可维护性是读者理解代码必须做的工作。追踪两个轴：**要追的层**（问题与答案之间的间接层）与**要持有的状态**（读者必须记在脑中的隐藏或可变上下文）。LOC、圈复杂度、"clean architecture"都是代理指标。读者负荷才是要紧的东西。两个轴相互独立：一个 50 个全局变量的扁平文件，可以和 6 层适配器栈一样难推理。两个都守。这是 [Guard the Context Window](../principle-guard-the-context-window/SKILL.md) 的人类版本——读者的工作记忆同样是有限的。
+可维护性是读者理解代码必须做的工作。追踪两个轴：**要追的层**（问题与答案之间的间接层）与**要持有的状态**（读者必须记在脑中的隐藏或可变上下文）。LOC、圈复杂度、"clean architecture"都是代理指标。读者负荷才是要紧的东西。两个轴相互独立：一个 50 个全局变量的扁平文件，可以和 6 层适配器栈一样难推理。两个都守。这是 [Guard the Context Window](./principles.md) 的人类版本——读者的工作记忆同样是有限的。
 
 - **收掉省不过本的层**：只有一个调用方的包装、没有第二个实现的适配器、从未被需要的投机间接层。内联它们。
 - **相邻层必须改变抽象。** 重复同样方法与参数的层只加负荷不加压缩。收掉直通层。
@@ -169,9 +169,9 @@ codemod、生成器或脚本每次以同样方式做这份工作，且重跑免�
 - 应用本原则会产出一个文件。若你引用了它而 diff 里没有 codemod、脚本、生成器或委派技能，你就是没应用它。
 - 工作活得比会话长时，把杠杆提交入库。
 
-门槛是平凡性，不是重复性。当杠杆正是让工作可检查的东西时，一次性工作也值得一个杠杆。按 [Laziness Protocol](../principle-laziness-protocol/SKILL.md)，造能做或证明这件事的最小脚本，绝不是一个框架。
+门槛是平凡性，不是重复性。当杠杆正是让工作可检查的东西时，一次性工作也值得一个杠杆。按 [Laziness Protocol](./principles.md)，造能做或证明这件事的最小脚本，绝不是一个框架。
 
-区别于 [Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md)（把反复出现的指令变成持久护栏）。本条是面前工作的吞吐量与可评审性。把验证本身脚本化见 [Prove It Works](../principle-prove-it-works/SKILL.md)。
+区别于 [Encode Lessons in Structure](./principles.md)（把反复出现的指令变成持久护栏）。本条是面前工作的吞吐量与可评审性。把验证本身脚本化见 [Prove It Works](./principles.md)。
 
 ---
 
@@ -381,11 +381,11 @@ codemod、生成器或脚本每次以同样方式做这份工作，且重跑免�
 - **列出这个数字还可能在测什么，逐个用证据排除。** 常见嫌疑：错误、被跳过或缓存的工作、从未运行的代码、未调优的一侧（留在默认设置）、噪声、以及端到端太小不足道的一段。
 - **证据与数字放在一起。** run 数、波动、限制器，写进笔记或链接的制品。
 
-性能数字按 [benchmark-checklist](../benchmark-checklist/SKILL.md) 技能跑完整流程。eval 结果对试次问同样的问题：每次 run 都做了任务吗、差距跨试次与模型都成立吗、场景重要吗。
+性能数字按 [benchmark-checklist](./benchmark-checklist.md) 技能跑完整流程。eval 结果对试次问同样的问题：每次 run 都做了任务吗、差距跨试次与模型都成立吗、场景重要吗。
 
 你跳过了本条，当：run 开始时没写下会改变决策的结果；数字背后的证据没有 run 数、没有波动、没有点名的限制器；或省下的时间大于被改那一段原本花的时间。
 
-区别于 [Prove It Works](../principle-prove-it-works/SKILL.md)（检查输出是真的）。
+区别于 [Prove It Works](./principles.md)（检查输出是真的）。
 
 ---
 

@@ -2,7 +2,7 @@
 
 > 翻译自 `skills/poteto-mode/SKILL.md`。**这是 pstack 的运行时总控文件**：接收 `/poteto-mode` 的会话按它匹配剧本、路由技能、写回应。文件头部 YAML 的 `name`/`description`/`icon`/`color` 是注册元数据，保留原文。
 >
-> 本译文仅供人阅读。Agent 执行时读英文原文。术语基准见 [GLOSSARY.md](GLOSSARY.md)。
+> 本译文仅供人阅读。Agent 执行时读英文原文。术语基准见 [GLOSSARY.md](../GLOSSARY.md)。
 
 ---
 

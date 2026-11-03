@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "docs/**"
+      - "zh/**"
       - "scripts/**"
 
 permissions:
@@ -39,7 +39,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           title="上游漂移或标识符门禁失败"
-          body=$(printf '自动检查失败。\n\n- drift check: %s\n- slug lint: %s\n\n按 docs/00-版本基线与引用规范.md 复核。' "${{ steps.check.outcome }}" "${{ steps.lint.outcome }}")
+          body=$(printf '自动检查失败。\n\n- drift check: %s\n- slug lint: %s\n\n按 SYNC.md 的流程复核。' "${{ steps.check.outcome }}" "${{ steps.lint.outcome }}")
           count=$(gh issue list --search "$title in:title" --state open --json number --jq 'length')
           if [ "$count" = "0" ]; then
             gh issue create --title "$title" --body "$body"
