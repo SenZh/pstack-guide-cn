@@ -1,0 +1,48 @@
+name: upstream-drift
+
+on:
+  schedule:
+    - cron: "13 1 * * 1"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "scripts/**"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 用 GitHub 自动注入的 token，无需手工配置 secret
+      - name: Run upstream drift check
+        id: check
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: pwsh ./scripts/sync-check.ps1
+
+      - name: Run slug lint
+        id: lint
+        continue-on-error: true
+        run: pwsh ./scripts/slug-lint.ps1
+
+      - name: Open issue on failure
+        if: steps.check.outcome == 'failure' || steps.lint.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="上游漂移或标识符门禁失败"
+          body=$(printf '自动检查失败。\n\n- drift check: %s\n- slug lint: %s\n\n按 docs/00-版本基线与引用规范.md 复核。' "${{ steps.check.outcome }}" "${{ steps.lint.outcome }}")
+          count=$(gh issue list --search "$title in:title" --state open --json number --jq 'length')
+          if [ "$count" = "0" ]; then
+            gh issue create --title "$title" --body "$body"
+          else
+            echo "已有开启中的同类 issue，跳过"
+          fi
