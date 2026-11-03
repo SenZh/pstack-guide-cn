@@ -42,7 +42,7 @@ pwsh ./scripts/sync-check.ps1   # 上游漂移检测：译文基线 vs 上游 bl
 pwsh ./scripts/slug-lint.ps1    # 标识符门禁：功能标识符被汉化即报错
 ```
 
-两条都进 CI（每周一 + 手动触发），失败自动开 issue。slug-lint 自身按上游 `Able to fail` 原则验证过：注入 `principle-懒惰协议` 确实报错退出 1。
+两条都进 CI（每周一 + 手动触发），失败自动开 issue。slug-lint 自身按上游 `Able to fail` 原则验证过：注入汉化的 principle 标识符确实报错退出 1。
 
 ## 许可
 
