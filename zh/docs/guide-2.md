@@ -138,7 +138,7 @@ pstack 故意不提供规划技能。当你确实想要一份成文计划时，�
 
 `/poteto-mode` 本来就在套用这个阶梯。跨边界的工作会自行触发 `/architect`，所以你直接点名这些技能，主要是想要比默认更多或更少的审查强度时。
 
-下一篇：「构建与清理变更」，见本篇下一节。
+下一篇：[构建与清理变更](#构建与清理变更05-build-and-cleanmdbuild-the-change-and-clean-the-diff)（05-build-and-clean.md）。
 
 ---
 
@@ -178,7 +178,7 @@ pstack 故意不提供规划技能。当你确实想要一份成文计划时，�
 
 要对一个数字做持续改进，有 [Hillclimb 剧本](./playbooks-01-task.md)（`playbooks/hillclimb.md`，爬坡）。给它指标、目标和一个尝试次数下限，它以一套冻结的测量装置（harness，宿主环境）一次循环一条假设。它保留有效的胜利，回退其余一切。
 
-两个 perf 剧本都会对各自的数字跑 [`/benchmark-checklist`](../skills/benchmark-checklist.md)。Perf issue 审查基线及其后的每一个数字；Hillclimb 在冻结装置之前先审查装置。什么时候需要你自己输入这条命令，见下篇"验证与交付"（06-verify-and-ship.md）中"用 `/benchmark-checklist` 审查一个测量出的数字"一节。
+两个 perf 剧本都会对各自的数字跑 [`/benchmark-checklist`](../skills/benchmark-checklist.md)。Perf issue 审查基线及其后的每一个数字；Hillclimb 在冻结装置之前先审查装置。什么时候需要你自己输入这条命令，见下篇[验证与交付](#验证与交付06-verify-and-shipmdverify-the-result-and-open-a-pr)（06-verify-and-ship.md）中"用 `/benchmark-checklist` 审查一个测量出的数字"一节。
 
 有时候你要的是原因，先于任何修复。对一个活体症状——泄漏、空闲 CPU 空转、视觉毛刺——[Runtime forensics 剧本](./playbooks-01-task.md)（`playbooks/runtime-forensics.md`，运行时取证）给运行中的进程装仪表。对一份你已经捕获的 profile，[Trace forensics 剧本](./playbooks-01-task.md)（`playbooks/trace-forensics.md`，轨迹取证）读制品（artifact，制品）、把热帧映射回源码。两者都返回诊断，不返回修复：
 
@@ -220,13 +220,13 @@ typescript-best-practices 技能把类型系统原则变成具体规则：可辨
 /no-comments the diff
 ```
 
-[`/no-comments`](../skills/no-comments.md) 派出 Comment Sicko（保留不译），一个只读评审者，持有一份很短的保留清单：许可证头、公共 API 上的文档注释、解释代码解释不了之事的链接、由你无法重塑的外部依赖所强制的行为。其余全走。为你自己代码里的意外做解释，换不来这种宽免：那条注释会以重构标记的形式回来，而 `/no-comments` 在根因处修掉它接受的标记。当一条注释主张一个约束——"do not remove"——该技能会提议把这个主张编码成一个类型、一个测试或一条 lint。无论走哪条路，注释都会被移出来。
+`/no-comments` 技能派出 Comment Sicko（保留不译），一个只读评审者，持有一份很短的保留清单：许可证头、公共 API 上的文档注释、解释代码解释不了之事的链接、由你无法重塑的外部依赖所强制的行为。其余全走。为你自己代码里的意外做解释，换不来这种宽免：那条注释会以重构标记的形式回来，而 `/no-comments` 在根因处修掉它接受的标记。当一条注释主张一个约束——"do not remove"——该技能会提议把这个主张编码成一个类型、一个测试或一条 lint。无论走哪条路，注释都会被移出来。
 
 分工值得记清楚：`/deslop` 把 slop（AI 生成的低质冗余内容）从代码里清出去，`/unslop` 把它从文字里清出去，`/no-comments` 把注释交给一个没写过它们的评审者。
 
 **坑**：清理不是可选的抛光。一份带叙述性注释和防御性死代码的 diff，在评审者眼里就是没写完，而多余的代码正是下一个 bug 藏身的地方。diff 摸起来发虚，就在 commit 之前说 `deslop it`，别等评审来点名。
 
-下一篇：「验证与交付」，见本篇下一节。
+下一篇：[验证与交付](#验证与交付06-verify-and-shipmdverify-the-result-and-open-a-pr)（06-verify-and-ship.md）。
 
 ---
 
@@ -393,7 +393,7 @@ Babysit 停在 merge-ready。它从不合并，哪怕全绿，因为合并是另
 
 [Shipping 剧本](./playbooks-02-autonomy.md)（`playbooks/shipping.md`，交付）在武装任何东西之前，逐个独立验证每个 PR。每个 PR 一个全新的 agent 现场证明行为，而且裁决一个变更的 agent 绝不是写它的那个。然后 Shipping 只从底部落地连续已验证的那一段，默认走 GitHub、Origin CLI 可用时走 Origin，一次一个 PR，并报告第一个打破链条的 PR。一个已验证的 PR 压在未验证的 PR 之上时要等，因为现在合并它会把那段空档拽到脚底下。
 
-下一篇：「睡觉时干活」（07-overnight.md），见第 3 篇译文。
+下一篇：[睡觉时干活](guide-3.md)（07-overnight.md，见第 3 篇译文）。
 
 ---
 
