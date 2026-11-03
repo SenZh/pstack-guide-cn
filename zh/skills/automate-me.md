@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Automate me
+## Automate me
 
 一套引导式流程，把用户的工作约定变成 agent 会遵循的技能。
 产出是一个为其量身定制的 `-mode` 技能（如 `jay-mode`、`priya-mode`）。

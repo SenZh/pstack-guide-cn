@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Recall
+## Recall
 
 **在你开工或续做之前，重建用户最近的工作上下文，交回一份紧凑的胶囊（capsule）：现状如何、下一步做什么。**
 

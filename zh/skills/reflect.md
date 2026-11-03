@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Reflect
+## Reflect
 
 从当前对话中挖出可沉淀的经验教训（learnings），再把它们路由成对既有技能的具体修改。
 

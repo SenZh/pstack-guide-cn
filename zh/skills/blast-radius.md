@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Blast radius
+## Blast radius
 
 在变更上线之前，找出它会在别处破坏什么。用于 "blast radius of X"、"what could this break"，或审查一个你还不信任的小 diff。
 

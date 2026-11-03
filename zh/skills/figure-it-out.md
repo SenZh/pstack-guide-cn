@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Figure it out
+## Figure it out
 
 任务匹配不上任何剧本时，自己设计一个。
 任何代码之前的交付物就是工作流本身：一串阶段，严谨度随任务伸缩、跑科学方法、并留下人类离开后可审计的决策轨迹。

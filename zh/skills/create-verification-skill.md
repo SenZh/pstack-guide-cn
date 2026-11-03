@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Create a verification skill
+## Create a verification skill
 
 每个严肃的项目都需要一种脚本化的方式来驱动真实应用并证明行为：启动它、以用户会有的方式演练某个功能、捕获证据。本技能把这件事生成为一个项目本地技能（`<skills>/verify-<app>/`），为该仓库量身定制。`<skills>` 是你的宿主环境的项目技能目录：Cursor 中是 `.cursor/skills/`，Claude Code 中是 `.claude/skills/`，Pi 中是 `.pi/skills/`，Codex、OpenCode 及其他是 `.agents/skills/`。如果仓库已经把技能放在其中某处，就用那一处。你写生成物是给下一个 agent 看的，不是给人看的：它会被一个从未见过这个应用的 agent 在任务中途冷读。
 

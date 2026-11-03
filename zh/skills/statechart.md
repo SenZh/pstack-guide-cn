@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Statechart
+## Statechart
 
 图展示系统如何在状态之间迁移，用词取自读图的那个人。那个人——读者——来判断行为是否正确。
 

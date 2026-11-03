@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Why
+## Why
 
 调查代码背后的动机与意图。配套的 `how` 技能回答代码做什么、如何运作；`why` 回答是哪些力量塑造了它如今的形状。
 

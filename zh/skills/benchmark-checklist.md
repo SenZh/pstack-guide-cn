@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Benchmark checklist
+## Benchmark checklist
 
 只要你产出一个性能数字就要用它：PR 的前后对比、一次回退论断、一个爬山（hillclimb）宿主，或一次库/配置选型。每个问题都用一次运行得来的证据回答，不是对代码的猜测。
 

@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Arena
+## Arena
 
 启动任何东西之前，先打开一个待办清单，每个阶段一个条目：Frame（定框）、Fan out（扇出）、Cross-judge（交叉评审）、Pick（选基底）、Graft（嫁接）、Verify（验证）。
 

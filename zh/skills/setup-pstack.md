@@ -15,7 +15,7 @@ description: Configure which models pstack uses per role and at what reasoning b
 
 ---
 
-# Setup pstack
+## Setup pstack
 
 写 pstack 的模型设置（settings file），每个角色（role）一个模型：
 

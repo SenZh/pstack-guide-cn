@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Maintain a formal verification skill
+## Maintain a formal verification skill
 
 形式化检查证明的是它所描述之物的性质。
 代码变了而验证没变，检查可能继续通过，但它描述的代码已不存在。

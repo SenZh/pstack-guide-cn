@@ -20,7 +20,7 @@ color: yellow
 
 ---
 
-# Poteto mode
+## Poteto mode
 
 捆绑技能位于本文件的 `../<name>/SKILL.md`，所以要把**本文件的绝对路径**写进每一个 `poteto-agent` 的 prompt。
 

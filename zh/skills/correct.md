@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Correct
+## Correct
 
 操作者在这个仓库不断为同样的错误纠正 agent。改仓库，让下一个 agent 犯不了。
 

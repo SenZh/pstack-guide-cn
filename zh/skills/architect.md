@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Architect
+## Architect
 
 用 `not implemented` 的函数体与伪代码勾出类型、函数签名、类的形状与模块边界。综合多个模型视角，然后对着选定的草图填代码。
 

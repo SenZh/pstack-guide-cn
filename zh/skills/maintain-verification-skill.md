@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Maintain a verification skill
+## Maintain a verification skill
 
 应用一变，功能地图就开始腐烂。本技能是 `/create-verification-skill` 生成的技能（或任何带功能地图的项目本地验证技能）的保养闭环。严谨的单位是功能，不是每句话：从源码覆盖每个功能文件、活体演练每个功能，而不把每条要点都推到终局验证。
 

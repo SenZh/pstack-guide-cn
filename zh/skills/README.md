@@ -11,7 +11,7 @@
 <!-- mirror:start — this top section is specific to the mirror. Everything after mirror:end is the upstream README from cursor/plugins/pstack, unchanged. To sync with upstream, follow MIRROR.md. -->
 （上面这条 HTML 注释为 mirror 维护标记，原样保留：本节顶部内容为镜像专属；`mirror:end` 之后是从 cursor/plugins/pstack 原样搬来的上游 README；与上游同步的流程见 MIRROR.md。）
 
-# pstack — standalone mirror（pstack — 独立镜像）
+## pstack — standalone mirror（pstack — 独立镜像）
 
 [图：cursor/plugins/pstack 与本镜像 backnotprop/pstack 保持同步。`npx skills add backnotprop/pstack` 会把它安装进 Claude Code、Codex、Pi、Cursor、OpenCode 及其他 agent。]
 
@@ -69,7 +69,7 @@ Cursor 的原始 README 在[本页下方](#pstack)。
 
 ---
 
-# pstack
+## pstack
 
 [查看 Pstack 博客](https://x.com/poteto/article/2094457600259842065?lang=en)
 

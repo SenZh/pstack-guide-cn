@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Create a formal verification skill
+## Create a formal verification skill
 
 测试检查的是有人想到要写的那些用例。形式化验证检查一个声明范围内的每个用例：模型里每一步排列、界内每个输入、或所有输入。本技能找出仓库里这件事最要紧的那部分，验证它的一个性质（property），并留下一个项目本地技能，让下一个 agent 能拿改动对照该性质来检查。写那个技能时，面向的是一个冷读它、正处于改动中途、从未见过你工作的 agent。用户必须能够信任结果并据以行动，而不需要先学那门验证语言。
 

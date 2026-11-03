@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Ketchup video
+## Ketchup video
 
 遵循 [`/ketchup`](./ketchup.md)，但把发生的事放进一部带字幕的短幻灯片视频，替代它的总结与视觉物。它的时间窗从用户在 `/ketchup-video` 之前写的最后一条消息算起，不是更早的任何 `/ketchup`。在仓库之外写并渲染视频，是 ketchup 只读规则的唯一例外。回应由 ketchup 的开头句、内嵌的视频、一行点出剩下你自己能做的工作、以及行动项构成。视频展示某决定的可选项时，每个选项用视频给它的名字来称呼。渲染失败时，用一行说明，然后只给决定。
 

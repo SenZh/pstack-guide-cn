@@ -16,7 +16,7 @@ disable-model-invocation: true
 
 ---
 
-# Poteto help
+## Poteto help
 
 回答用户关于 pstack 的问题，递给他们一条可以直接发送的 prompt，并附上答案所出的文件链接。
 帮助类问题，不要直接开工。
